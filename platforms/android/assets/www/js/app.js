@@ -5,7 +5,7 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
             $ionicConfigProvider.views.maxCache(0);
             $ionicConfigProvider.scrolling.jsScrolling(false);
             $ionicConfigProvider.tabs.position('bottom');
-            $ionicConfigProvider.views.transition('none');
+            //$ionicConfigProvider.views.transition('none');
             $stateProvider.state('home', {
                 url: '/',
                 templateUrl: 'templates/home.html',
@@ -32,52 +32,51 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
 
 
 
-            // setup an abstract state for the tabs directive
+
+
+
             $stateProvider.state('dashboard', {
-                url: "/dashboard",
-                abstract: true,
-                templateUrl: "templates/dashboard.html",
+                url: '/dashboard',
+                templateUrl: 'templates/tab-dash.html',
                 controller: 'DashboardController'
-            });
-
-
-            $stateProvider.state('dashboard.dash', {
-                url: '/dash',
-                views: {
-                    'dashboard-dash': {
-                        templateUrl: 'templates/tab-dash.html',
-                        controller: 'DashboardController'
-                    }
-                }
             })
 
-            $stateProvider.state('dashboard.add', {
+            $stateProvider.state('add', {
                 url: '/add',
-                views: {
-                    'dashboard-add': {
-                        templateUrl: 'templates/tab-add.html',
-                        controller: 'AddController'
-                    }
-                }
+                templateUrl: 'templates/tab-add.html',
+                controller: 'AddController'
             })
 
-            $stateProvider.state('dashboard.feeds', {
+            $stateProvider.state('feeds', {
                 url: '/feeds',
+                abstract: true,
+                templateUrl: 'templates/feeds.html',
+                controller: 'MyFeedsController'
+            })
+            
+            $stateProvider.state('feeds.myfeeds', {
+                url: '/myfeeds',
                 views: {
-                    'dashboard-feeds': {
-                        templateUrl: 'templates/tab-feeds.html',
-                        controller: 'FeedsController'
+                    'feeds-myfeeds': {
+                        templateUrl: 'templates/my-feeds.html',
+                        controller: 'MyFeedsController'
+                    }
+                }
+            })
+            
+            $stateProvider.state('feeds.mycommunity', {
+                url: '/mycommunity',
+                views: {
+                    'feeds-mycommunity': {
+                        templateUrl: 'templates/my-community.html'
                     }
                 }
             })
 
-            $stateProvider.state('dashboard.account', {
+
+            $stateProvider.state('account', {
                 url: '/account',
-                views: {
-                    'dashboard-account': {
-                        templateUrl: 'templates/tab-account.html'
-                    }
-                }
+                templateUrl: 'templates/tab-account.html'
             })
 
             $stateProvider.state('logout', {
@@ -150,23 +149,71 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                 controller: 'ReviewsController'
             });
 
+            $stateProvider.state('add-review', {
+                url: '/add-review',
+                templateUrl: 'templates/add-review.html',
+                controller: 'AddReviewController'
+            });
+
+            $stateProvider.state('book-slot', {
+                url: '/book-slot',
+                templateUrl: 'templates/book-slot.html',
+                controller: 'BookSlotController'
+            });
+
+            $stateProvider.state('comments', {
+                url: '/comments',
+                templateUrl: 'templates/comments.html',
+                controller: 'CommentsController'
+            });
+
+            $stateProvider.state('social', {
+                url: "/social",
+                abstract: true,
+                templateUrl: "templates/user-socials.html",
+                controller: 'FollowersController'
+            });
+
+            $stateProvider.state('social.followers', {
+                url: '/followers',
+                views: {
+                    'social-followers': {
+                        templateUrl: 'templates/social-followers.html',
+                        controller: 'FollowersController'
+                    }
+                }
+            })
+
+            $stateProvider.state('social.following', {
+                url: '/following',
+                views: {
+                    'social-following': {
+                        templateUrl: 'templates/social-following.html',
+                        controller: 'FollowingController'
+                    }
+                }
+            })
+
+            $stateProvider.state('other-profile', {
+                url: '/other-profile',
+                templateUrl: 'templates/other-profile.html',
+                controller: 'OtherProfileController'
+            });
+
+
             $urlRouterProvider.otherwise('/')
         })
 
-        
-        .controller('AppCtrl', function ($state, $scope, $ionicHistory, $ionicSideMenuDelegate, $ionicPopup, $ionicPlatform) {
+        .controller('AppCtrl', function ($state, $scope, $ionicHistory, $ionicSideMenuDelegate, $ionicPopup) {
             ionic.Platform.ready(function () {
-                // then override any default you want
-                window.plugins.nativepagetransitions.globalOptions.duration = 500;
-                window.plugins.nativepagetransitions.globalOptions.iosdelay = 350;
-                window.plugins.nativepagetransitions.globalOptions.androiddelay = 350;
-                window.plugins.nativepagetransitions.globalOptions.winphonedelay = 350;
-                window.plugins.nativepagetransitions.globalOptions.slowdownfactor = 4;
-                // these are used for slide left/right only currently
-                window.plugins.nativepagetransitions.globalOptions.fixedPixelsTop = 0;
-                window.plugins.nativepagetransitions.globalOptions.fixedPixelsBottom = 0;
-
-
+                /*window.plugins.nativepagetransitions.globalOptions.duration = 500;
+                 window.plugins.nativepagetransitions.globalOptions.iosdelay = 350;
+                 window.plugins.nativepagetransitions.globalOptions.androiddelay = 350;
+                 window.plugins.nativepagetransitions.globalOptions.winphonedelay = 350;
+                 window.plugins.nativepagetransitions.globalOptions.slowdownfactor = 4;
+                 // these are used for slide left/right only currently
+                 window.plugins.nativepagetransitions.globalOptions.fixedPixelsTop = 0;
+                 window.plugins.nativepagetransitions.globalOptions.fixedPixelsBottom = 0;*/
             });
 
 
@@ -177,28 +224,28 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
 
             $scope.myGoBack = function () {
                 $ionicHistory.goBack();
-                window.plugins.nativepagetransitions.slide(
-                        {"direction": "right"},
-                        function (msg) {
-                            //alert("success: " + msg)
-                        }, // called when the animation has finished
-                        function (msg) {
-                            //alert("error: " + msg)
-                        } // called in case you pass in weird values
-                );
+                /*window.plugins.nativepagetransitions.slide(
+                 {"direction": "right"},
+                 function (msg) {
+                 //alert("success: " + msg)
+                 }, // called when the animation has finished
+                 function (msg) {
+                 //alert("error: " + msg)
+                 } // called in case you pass in weird values
+                 );*/
             };
 
             $scope.goToPage = function (pageId) {
                 $state.go(pageId);
-                window.plugins.nativepagetransitions.slide(
-                        {"direction": "left"},
-                        function (msg) {
-                            //alert("success: " + msg)
-                        }, // called when the animation has finished
-                        function (msg) {
-                            //alert("error: " + msg)
-                        } // called in case you pass in weird values
-                );
+                /*window.plugins.nativepagetransitions.slide(
+                 {"direction": "left"},
+                 function (msg) {
+                 //alert("success: " + msg)
+                 }, // called when the animation has finished
+                 function (msg) {
+                 //alert("error: " + msg)
+                 } // called in case you pass in weird values
+                 );*/
             };
 
 
@@ -229,20 +276,20 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
             $scope.submitForm = function (loginForm) {
                 if (loginForm.$valid) {
                     //var newEmail = $scope.data.email;
-                    $scope.goToPage('dashboard.dash');
+                    $scope.goToPage('dashboard');
                 }
             }
         })
 
         .controller('LogoutController', function ($scope, $state) {
-            $scope.goToPage('home');
+            $state.go('home');
         })
 
         .controller('SignUpController', function ($scope, $state) {
             $scope.submitForm = function (signupForm) {
                 if (signupForm.$valid) {
                     //var newEmail = $scope.data.email;
-                    $scope.goToPage('dashboard.dash');
+                    $scope.goToPage('dashboard');
                 }
             }
         })
@@ -332,6 +379,38 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
         })
 
         .controller('ReviewsController', function ($scope, $state) {
+
+        })
+
+        .controller('AddReviewController', function ($scope, $state) {
+
+        })
+
+        .controller('BookSlotController', function ($scope, $state) {
+
+        })
+
+        .controller('MyFeedsController', function ($scope, $state) {
+
+        })
+
+        .controller('MyCommunityController', function ($scope, $state) {
+
+        })
+
+        .controller('CommentsController', function ($scope, $state) {
+
+        })
+
+        .controller('FollowersController', function ($scope, $state) {
+
+        })
+
+        .controller('FollowingController', function ($scope, $state) {
+
+        })
+
+        .controller('OtherProfileController', function ($scope, $state) {
 
         })
 

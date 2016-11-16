@@ -1,0 +1,13 @@
+<ion-view view-title="Tabs" cache-view="false">
+    <ion-tabs class="tabs-icon-top">
+        <!-- Dashboard Tab -->
+        <ion-tab title="Followers" icon="icon ion-home" ng-click="goToPage('social.followers')" class="tabItem">
+            <ion-nav-view name="social-followers"></ion-nav-view>
+        </ion-tab>
+        <!-- Friends Tab -->
+        <ion-tab title="Following" icon="icon ion-plus-circled" ng-click="goToPage('social.following')"  class="tabItem">
+            <ion-nav-view name="social-following"></ion-nav-view>
+        </ion-tab>
+    </ion-tabs>
+</ion-view>
+

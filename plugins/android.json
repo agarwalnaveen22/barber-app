@@ -19,12 +19,7 @@
         "com.telerik.plugins.nativepagetransitions": {
             "PACKAGE_NAME": "com.barber"
         },
-        "cordova-plugin-crosswalk-webview": {
-            "XWALK_VERSION": "21+",
-            "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
-            "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
-            "XWALK_MODE": "embedded",
-            "XWALK_MULTIPLEAPK": "true",
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.barber"
         }
     },
