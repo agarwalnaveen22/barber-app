@@ -28,7 +28,7 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <!--meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"-->
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -36,6 +36,7 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO4GjTIW_WW5VkWK2TYX2fF0T2Vf5TaTg&libraries=places"></script>
         <script type="text/javascript" src="js/ionic.bundle.js"></script>
         <script type="text/javascript" src="js/ionic.js"></script>
         <script type="text/javascript" src="js/ionic-angular.js"></script>
@@ -46,7 +47,7 @@
         <script type="text/javascript" src="js/ionic-native.js"></script>
         <script type="text/javascript" src="js/angular-messages.js"></script>
         <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-
+        <script type="text/javascript" src="js/function.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
         <title>Barber</title>
     </head>
@@ -58,7 +59,7 @@
             <div class="list margin-top-16">
                 <ion-item nav-clear menu-close ng-click="goToPage('dashboard')">Home</ion-item>
                 <ion-item nav-clear menu-close ng-click="goToPage('add')">Add</ion-item>
-                <ion-item nav-clear menu-close ng-click="goToPage('feeds.myfeeds')">Feeds</ion-item>
+                <!--ion-item nav-clear menu-close ng-click="goToPage('feeds.myfeeds')">Feeds</ion-item-->
                 <ion-item nav-clear menu-close ng-click="goToPage('account')">Account</ion-item>
             </div>
 

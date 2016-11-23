@@ -9,26 +9,33 @@
 
             <ion-item>
                 <label class="item-input textbox-search">
-                    <input type="search" placeholder="Search">
+                    <input type="search" id="locationSearch" placeholder="Search" ng-focus="initialize($event)">
                     <i class="icon ion-search size-25"></i>
                 </label>
             </ion-item>
 
             <ion-item>
                 <label class="item-input textbox-search">
-                    <input type="text" placeholder="Current Location">
+                    <input type="text" id="location" placeholder="Current Location" ng-click="getCurrentLocation()">
                     <i class="icon ion-android-locate size-25"></i>
                 </label>
             </ion-item>
 
+            <input type="hidden" name="lat" id="lat">
+            <input type="hidden" name="lng" id="lng">
 
         </ion-list>
 
-        <ion-list>
+        <ion-input class="item-input padding">
+            <input type="button" ng-click="searchSaloons()" class="button button-positive" value="Search" />
+        </ion-input>
+
+        <!--ion-list>
             <h4 class="title center-align">Recent Searches</h4>
             <ion-radio ng-model="choice" ng-value="'A'">Sindhi Camp</ion-radio>
             <ion-radio ng-model="choice" ng-value="'B'">Vaishal Nagar</ion-radio>
             <ion-radio ng-model="choice" ng-value="'C'">Mansarovar</ion-radio>
-        </ion-list>
+        </ion-list-->
+        
     </ion-content>
 </ion-modal-view>

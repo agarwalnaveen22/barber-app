@@ -4,87 +4,22 @@
         <h1 class="title">Reviews</h1>
     </ion-header-bar>
     <ion-content overflow-scroll="true" class="padding">
-        <div class="list margin-top-5">
+        <div class="list margin-top-5" ng-repeat="review in reviews">
             <ion-item class="item-thumbnail-left">
-                <img src="img/profile.jpg" />
+                <img ng-if="review.UserDetail.profile_picture==''" src="img/profile.jpg" />
+                <img ng-if="review.UserDetail.profile_picture!=''" src="review.UserDetail.profile_picture" />
                 <div class="row">
-                    <div class="col-50 left-align">John Cemon</div>
-                    <div class="col-50 right-align size-10">Rated 4.5</div>
+                    <div class="col-50 left-align">{{review.UserDetail.name}}</div>
                 </div>
                 <div class="row">
-                    <div class="size-10">23 Reviews, 1K Followers</div>
+                    <div class="size-10">{{review.UserDetail.current_reviews}} Reviews, {{review.UserDetail.current_followers}} Followers</div>
                 </div>
                 <div class="row">
-                    <div class="size-10">4 Hours Ago</div>
+                    <div class="size-10">{{review.Review.created | date:'shortTime'}}</div>
                 </div>
             </ion-item>
             <ion-item class="full-text">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-            </ion-item>
-        </div>
-
-        <div class="list margin-top-5">
-            <ion-item class="item-thumbnail-left">
-                <img src="img/profile.jpg" />
-                <div class="row">
-                    <div class="col-50 left-align">John Cemon</div>
-                    <div class="col-50 right-align size-10">Rated 4.5</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">23 Reviews, 1K Followers</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">4 Hours Ago</div>
-                </div>
-            </ion-item>
-            <ion-item class="full-text">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-            </ion-item>
-        </div>
-
-        <div class="list margin-top-5">
-            <ion-item class="item-thumbnail-left">
-                <img src="img/profile.jpg" />
-                <div class="row">
-                    <div class="col-50 left-align">John Cemon</div>
-                    <div class="col-50 right-align size-10">Rated 4.5</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">23 Reviews, 1K Followers</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">4 Hours Ago</div>
-                </div>
-            </ion-item>
-            <ion-item class="full-text">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-            </ion-item>
-        </div>
-
-        <div class="list margin-top-5">
-            <ion-item class="item-thumbnail-left">
-                <img src="img/profile.jpg" />
-                <div class="row">
-                    <div class="col-50 left-align">John Cemon</div>
-                    <div class="col-50 right-align size-10">Rated 4.5</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">23 Reviews, 1K Followers</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">4 Hours Ago</div>
-                </div>
-            </ion-item>
-            <ion-item class="full-text">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                {{review.Review.review}}. 
             </ion-item>
         </div>
     </ion-content>

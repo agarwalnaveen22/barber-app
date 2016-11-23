@@ -4,74 +4,74 @@
         <h1 class="title">Add Your Favourite</h1>
     </ion-header-bar>
     <ion-content overflow-scroll="true" class="padding">
-        <form name="addForm" ng-submit="submitForm(addForm)" class="list card no-margin" novalidate="" >
+        <form name="addForm" id="addForm" ng-submit="submitForm(addForm)" class="list card no-margin" novalidate="" >
             <ion-input class="item item-input item-stacked-label" 
-                       ng-class="{ 'has-errors' : addForm.name.$invalid && addForm.$submitted, 
-        'no-errors' : addForm.name.$valid && addForm.$submitted}">
+                       ng-class="{ 'has-errors' : addForm.merchant_name.$invalid && addForm.$submitted, 
+        'no-errors' : addForm.merchant_name.$valid && addForm.$submitted}">
                 <ion-label >Parlor Name</ion-label>
-                <input type="text" name="name" ng-model="data.name" required>
+                <input type="text" name="merchant_name" ng-model="data.name" required>
             </ion-input>
 
-            <div class="error-container" ng-show="addForm.name.$error && addForm.$submitted" 
-                 ng-messages="addForm.name.$error">
+            <div class="error-container" ng-show="addForm.merchant_name.$error && addForm.$submitted" 
+                 ng-messages="addForm.merchant_name.$error">
                 <div class="error" ng-message="required">
                     <i class="ion-information-circled"></i> 
                     Please enter parlor name
                 </div>
             </div>
             <ion-input class="item item-input item-stacked-label">
-                <ion-checkbox ng-model="gents">Gents</ion-checkbox>
-                <ion-checkbox ng-model="ladies">Ladies</ion-checkbox>
-                <ion-checkbox ng-model="unisex">Unisex</ion-checkbox>
-                <ion-checkbox ng-model="spa">Spa</ion-checkbox>
+                <ion-checkbox name="type[gents]" value="gents" ng-model="gents">Gents</ion-checkbox>
+                <ion-checkbox name="type[ladies]" value="ladies" ng-model="ladies">Ladies</ion-checkbox>
+                <ion-checkbox name="type[unisex]" value="unisex" ng-model="unisex">Unisex</ion-checkbox>
+                <ion-checkbox name="type[spa]" value="spa" ng-model="spa">Spa</ion-checkbox>
             </ion-input>
             <ion-input class="item item-input item-stacked-label" 
-                       ng-class="{ 'has-errors' : addForm.contact.$invalid && addForm.$submitted, 
-        'no-errors' : addForm.contact.$valid && addForm.$submitted}">
+                       ng-class="{ 'has-errors' : addForm.merchant_contact.$invalid && addForm.$submitted, 
+        'no-errors' : addForm.merchant_contact.$valid && addForm.$submitted}">
                 <ion-label class="float-left width-90">Contact</ion-label>
                 <i class="icon ion-android-call size-25 float-left margin-left-20"></i>
-                <input type="tel" name="contact" ng-model="data.contact" required>
+                <input type="tel" name="merchant_contact" ng-model="data.contact" required>
             </ion-input>
 
-            <div class="error-container" ng-show="addForm.contact.$error && addForm.$submitted" 
-                 ng-messages="addForm.contact.$error">
+            <div class="error-container" ng-show="addForm.merchant_contact.$error && addForm.$submitted" 
+                 ng-messages="addForm.merchant_contact.$error">
                 <div class="error" ng-message="required">
                     <i class="ion-information-circled"></i> 
                     Please enter parlor contact number
                 </div>
             </div>
-            
+
             <ion-input class="item item-input item-stacked-label" 
-                       ng-class="{ 'has-errors' : addForm.location.$invalid && addForm.$submitted, 
-        'no-errors' : addForm.location.$valid && addForm.$submitted}">
+                       ng-class="{ 'has-errors' : addForm.merchant_location.$invalid && addForm.$submitted, 
+        'no-errors' : addForm.merchant_location.$valid && addForm.$submitted}">
                 <div>
-                <ion-label class="float-left width-90">Location</ion-label>
-                <i class="icon ion-location size-25 float-left margin-left-20"></i>
+                    <ion-label class="float-left width-90">Location</ion-label>
+                    <i class="icon ion-location size-25 float-left margin-left-20"></i>
                 </div>
                 <div style="clear:both"></div>
                 <div>
-                <input type="text" name="location" class="float-left width-78" ng-model="data.location" required>
-                <i class="icon ion-android-locate size-25"></i>
+                    <input type="text" id="location" googleplace="" name="merchant_location" class="float-left width-78" ng-model="data.location" required>
+                    <i class="icon ion-android-locate size-25"></i>
                 </div>
             </ion-input>
 
-            <div class="error-container" ng-show="addForm.location.$error && addForm.$submitted" 
-                 ng-messages="addForm.location.$error">
+            <div class="error-container" ng-show="addForm.merchant_location.$error && addForm.$submitted" 
+                 ng-messages="addForm.merchant_location.$error">
                 <div class="error" ng-message="required">
                     <i class="ion-information-circled"></i> 
                     Please enter parlor location
                 </div>
             </div>
-            
+
             <ion-input class="item item-input item-stacked-label" 
-                       ng-class="{ 'has-errors' : addForm.address.$invalid && addForm.$submitted, 
-        'no-errors' : addForm.address.$valid && addForm.$submitted}">
+                       ng-class="{ 'has-errors' : addForm.merchant_address.$invalid && addForm.$submitted, 
+        'no-errors' : addForm.merchant_address.$valid && addForm.$submitted}">
                 <ion-label>Address</ion-label>
-                <textarea name="address" ng-model="data.address" required></textarea>
+                <textarea name="merchant_address" ng-model="data.address" required></textarea>
             </ion-input>
 
-            <div class="error-container" ng-show="addForm.address.$error && addForm.$submitted" 
-                 ng-messages="addForm.address.$error">
+            <div class="error-container" ng-show="addForm.merchant_address.$error && addForm.$submitted" 
+                 ng-messages="addForm.merchant_address.$error">
                 <div class="error" ng-message="required">
                     <i class="ion-information-circled"></i> 
                     Please enter parlor address

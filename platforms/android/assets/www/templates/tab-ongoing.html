@@ -1,0 +1,35 @@
+<ion-view title="Dashboard" cache-view="false">
+    <ion-header-bar class="bar-positive">
+        <button class="button icon ion-chevron-left no-border" ng-click="myGoBack()"></button>
+        <h1 class="title">On-Going</h1>
+        
+
+
+    </ion-header-bar>
+    
+    <ion-content overflow-scroll="true" class="padding">
+        <div class="list margin-top-5" ng-repeat="booking in appointments | filter:search">
+            <ion-item class="item-thumbnail-left">
+                <img ng-if="booking.Merchant.MerchantImage[0].image == ''" src="img/profile.jpg" />
+                <img ng-if="booking.Merchant.MerchantImage[0].image != ''" src="{{booking.Merchant.MerchantImage[0].image}}" />
+                <div class="row">
+                    <div class="col-50 left-align">{{booking.Merchant.Merchant.name}}</div>
+
+                </div>
+                <div class="row">
+                    <div class="size-10"><span ng-repeat="type in booking.Merchant.MerchantType">{{type.name}}&nbsp;</span></div>
+                </div>
+                <div class="row">
+                    <div class="size-10">{{booking.Merchant.Merchant.address}}</div>
+                </div>
+            </ion-item>
+            <ion-item>
+                <div class="row center-align">
+                    <div class="col col-50 icon ion-calendar"> {{booking.Appointment.appointment_date| date: 'dd MMM. yyyy'}}</div>
+                    <div class="col col-50 icon ion-clock"> {{booking.Appointment.appointment_time| date: 'shortTime'}}</div>
+                </div>
+            </ion-item>
+        </div>
+        
+    </ion-content>
+</ion-view>

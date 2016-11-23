@@ -22,38 +22,20 @@
     </div>
     <ion-content overflow-scroll="true" class="padding">
         <ion-list class="dashboard">
-            <ion-item ng-click="goToPage('saloon-detail')" class="no-border">
-                <span class="badge badge-assertive top-corner">4.5</span>
-                <img src="img/Chrysanthemum.jpg" />
+            <ion-item ng-repeat="saloon in saloons" ng-click="goToPage('saloon-detail',saloon.Merchant.id)" class="no-border">
+                <span class="badge badge-assertive top-corner">{{saloon.Review.rating}}</span>
+                <img src="{{saloon.MerchantImage.MerchantImage.image}}" />
                 <ion-list>
                     <ion-item class="padding-0">
                         <div class="item row no-border">
-                            <span class="left-align col col-50">ABC Saloon</span>
-                            <span class="right-align col col-50 size-10">Male</span>
+                            <span class="left-align col col-50">{{saloon.Merchant.name}}</span>
+                            <span class="right-align col col-50 size-10"><span ng-repeat="type in saloon.MerchantType">{{type.MerchantType.name}}&nbsp;</span></span>
                         </div>
                         <div class="item row no-border">
-                            <span class="col size-10">B-12, vidyadhar nagar, jaipur</span>
+                            <span class="col size-10">{{saloon.Merchant.address}}</span>
                         </div>
                         <div class="item row no-border">
-                            <div class="ioc ion-location col">&nbsp;&nbsp;2.4 KM</div>
-                        </div>
-                    </ion-item>
-                </ion-list>
-            </ion-item>
-            <ion-item ng-click="goToPage('saloon-detail')" class="no-border">
-                <span class="badge badge-assertive top-corner">4.5</span>
-                <img src="img/Desert.jpg" />
-                <ion-list>
-                    <ion-item class="padding-0">
-                        <div class="item row no-border">
-                            <span class="left-align col col-50">ABC Saloon</span>
-                            <span class="right-align col col-50 size-10">Male</span>
-                        </div>
-                        <div class="item row no-border">
-                            <span class="col size-10">B-12, vidyadhar nagar, jaipur</span>
-                        </div>
-                        <div class="item row no-border">
-                            <div class="ioc ion-location col">&nbsp;&nbsp;2.4 KM</div>
+                            <div class="ioc ion-location col">&nbsp;&nbsp;{{saloon[0].distance | number:2}} KM</div>
                         </div>
                     </ion-item>
                 </ion-list>

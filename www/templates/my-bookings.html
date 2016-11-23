@@ -4,74 +4,28 @@
         <h1 class="title">My Bookings</h1>
     </ion-header-bar>
     <ion-content overflow-scroll="true" class="padding">
-        <div class="list margin-top-5">
+        <div class="list margin-top-5" ng-repeat="booking in appointments">
             <ion-item>
                 <div class="row">
-                    <div class="col-50 left-align">ABC Saloon</div>
-                    <div class="col-50 right-align size-10">Gents</div>
+                    <div class="col-50 left-align">{{booking.Merchant.Merchant.name}}</div>
+                    <div class="col-50 right-align size-10" ng-if="booking.Appointment.status==0">Pending</div>
+                    <div class="col-50 right-align size-10" ng-if="booking.Appointment.status==1">Approved</div>
+                    <div class="col-50 right-align size-10" ng-if="booking.Appointment.status==2">Rejected</div>
+                    <div class="col-50 right-align size-10" ng-if="booking.Appointment.status==3">Started</div>
+                    <div class="col-50 right-align size-10" ng-if="booking.Appointment.status==4">Completed</div>
+                    <div class="col-50 right-align size-10" ng-if="booking.Appointment.status==5">Canceled</div>
                 </div>
                 <div class="row">
-                    <div class="size-10">B-15, Viashali Nagar, Jaipur</div>
+                    <div class="size-10">{{booking.Merchant.Merchant.address}}</div>
                 </div>
             </ion-item>
             <ion-item>
                 <div class="row center-align">
-                    <div class="col col-50 icon ion-calendar"> 3 Oct 2016</div>
-                    <div class="col col-50 icon ion-clock"> 10:00 AM</div>
+                    <div class="col col-50 icon ion-calendar"> {{booking.Appointment.appointment_date| date: 'dd MMM. yyyy'}}</div>
+                    <div class="col col-50 icon ion-clock"> {{booking.Appointment.appointment_time| date: 'shortTime'}}</div>
                 </div>
-            </ion-item>
-        </div>
-        
-        <div class="list margin-top-5">
-            <ion-item>
-                <div class="row">
-                    <div class="col-50 left-align">ABC Saloon</div>
-                    <div class="col-50 right-align size-10">Gents</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">B-15, Viashali Nagar, Jaipur</div>
-                </div>
-            </ion-item>
-            <ion-item>
-                <div class="row center-align">
-                    <div class="col col-50 icon ion-calendar"> 3 Oct 2016</div>
-                    <div class="col col-50 icon ion-clock"> 10:00 AM</div>
-                </div>
-            </ion-item>
-        </div>
-        
-        <div class="list margin-top-5">
-            <ion-item>
-                <div class="row">
-                    <div class="col-50 left-align">ABC Saloon</div>
-                    <div class="col-50 right-align size-10">Gents</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">B-15, Viashali Nagar, Jaipur</div>
-                </div>
-            </ion-item>
-            <ion-item>
-                <div class="row center-align">
-                    <div class="col col-50 icon ion-calendar"> 3 Oct 2016</div>
-                    <div class="col col-50 icon ion-clock"> 10:00 AM</div>
-                </div>
-            </ion-item>
-        </div>
-        
-        <div class="list margin-top-5">
-            <ion-item>
-                <div class="row">
-                    <div class="col-50 left-align">ABC Saloon</div>
-                    <div class="col-50 right-align size-10">Gents</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">B-15, Viashali Nagar, Jaipur</div>
-                </div>
-            </ion-item>
-            <ion-item>
-                <div class="row center-align">
-                    <div class="col col-50 icon ion-calendar"> 3 Oct 2016</div>
-                    <div class="col col-50 icon ion-clock"> 10:00 AM</div>
+                <div class="row" ng-if="booking.Appointment.status==0 || booking.Appointment.status==1">
+                    <button class="button col" ng-click="changeBookingStatus(booking.Appointment.id,5)">Cancel</button>
                 </div>
             </ion-item>
         </div>

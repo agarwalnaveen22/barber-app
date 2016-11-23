@@ -61,6 +61,14 @@ module.exports = [
         "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
         "pluginId": "cordova-plugin-geolocation",
         "runs": true
+    },
+    {
+        "id": "com.razorpay.cordova.RazorpayCheckout",
+        "file": "plugins/com.razorpay.cordova/www/RazorpayCheckout.js",
+        "pluginId": "com.razorpay.cordova",
+        "clobbers": [
+            "RazorpayCheckout"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -71,7 +79,8 @@ module.exports.metadata =
     "cordova-plugin-camera": "2.3.0",
     "cordova-plugin-device": "1.1.3",
     "com.telerik.plugins.nativepagetransitions": "0.6.5",
-    "cordova-plugin-geolocation": "2.4.0"
+    "cordova-plugin-geolocation": "2.4.0",
+    "com.razorpay.cordova": "0.13.1"
 };
 // BOTTOM OF METADATA
 });

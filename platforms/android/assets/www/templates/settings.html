@@ -9,9 +9,9 @@
                 <i class="icon ion-chevron-right icon-accessory"></i> 
                 Change Password
             </ion-item>
-            <ion-item item="volunteer" ng-click="goToPage('static-pages')" class="item item-icon-right">
+            <ion-item item="volunteer" ng-repeat="pages in staticPages" ng-click="goToStaticPage(pages.Page.id)" class="item item-icon-right">
                 <i class="icon ion-chevron-right icon-accessory"></i> 
-                About
+                {{pages.Page.title}}
             </ion-item>
             <ion-item item="volunteer" ng-click="goToPage('feedback')" class="item item-icon-right">
                 <i class="icon ion-chevron-right icon-accessory"></i> 

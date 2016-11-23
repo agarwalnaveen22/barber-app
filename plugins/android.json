@@ -21,6 +21,9 @@
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.barber"
+        },
+        "com.razorpay.cordova": {
+            "PACKAGE_NAME": "com.barber"
         }
     },
     "dependent_plugins": {

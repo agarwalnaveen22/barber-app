@@ -27,6 +27,10 @@
                         {
                             "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Checkout\"><param name=\"android-package\" value=\"com.razorpay.cordova.Main\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -48,6 +52,10 @@
                         },
                         {
                             "xml": "<uses-feature android:name=\"android.hardware.location.gps\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECEIVE_SMS\" />",
                             "count": 1
                         }
                     ]
@@ -72,6 +80,9 @@
             "PACKAGE_NAME": "com.barber"
         },
         "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.barber"
+        },
+        "com.razorpay.cordova": {
             "PACKAGE_NAME": "com.barber"
         }
     },
@@ -138,6 +149,14 @@
             "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
             "pluginId": "cordova-plugin-geolocation",
             "runs": true
+        },
+        {
+            "id": "com.razorpay.cordova.RazorpayCheckout",
+            "file": "plugins/com.razorpay.cordova/www/RazorpayCheckout.js",
+            "pluginId": "com.razorpay.cordova",
+            "clobbers": [
+                "RazorpayCheckout"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -146,6 +165,7 @@
         "cordova-plugin-camera": "2.3.0",
         "cordova-plugin-device": "1.1.3",
         "com.telerik.plugins.nativepagetransitions": "0.6.5",
-        "cordova-plugin-geolocation": "2.4.0"
+        "cordova-plugin-geolocation": "2.4.0",
+        "com.razorpay.cordova": "0.13.1"
     }
 }

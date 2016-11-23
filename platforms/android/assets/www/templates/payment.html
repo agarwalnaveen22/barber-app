@@ -1,0 +1,29 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-positive">
+        <h1 class="title">Invoice No. {{invoice.id}}</h1>
+        <!--button class="button button-primary no-border" ng-click="closeLocation()">Cancel</button-->
+    </ion-header-bar>
+    <ion-content overflow-scroll="true">
+        <ion-item>
+            <div class="row full-text">
+                {{invoice.details}}
+            </div>
+        </ion-item>
+        <ion-item>
+            <h2>Total Payment:- Rs. {{invoice.amount}}/-</h2>
+        </ion-item>
+        <ion-list>
+            <h4 class="title center-align">Payment Mode</h4>
+            <ion-radio ng-model="paymentType" ng-change="setPaymentMode(1)" name="paymentType" ng-value="1">Online</ion-radio>
+            <ion-radio ng-model="paymentType" ng-change="setPaymentMode(2)" name="paymentType" ng-value="2">Cash</ion-radio>
+            <input type="hidden" ng-model="invoiceId" name="invoice_id" />
+            <input type="hidden" ng-model="description" name="description" />
+            <input type="hidden" ng-model="amount" name="amount" />
+            <input type="hidden" ng-model="merchantName" name="merchant_name" />
+            <input type="hidden" ng-model="paymentMode" />
+        </ion-list>
+        <ion-input class="item-input padding">
+            <input type="button" ng-click="goPayment('addPayment')" class="button button-positive" value="Pay" />
+        </ion-input>
+    </ion-content>
+</ion-modal-view>
