@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.barber" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <feature name="Whitelist">
-        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+<widget id="com.fablysh.customer" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Checkout">
+        <param name="android-package" value="com.razorpay.cordova.Main" />
+    </feature>
+    <feature name="NativePageTransitions">
+        <param name="android-package" value="com.telerik.plugins.nativepagetransitions.NativePageTransitions" />
         <param name="onload" value="true" />
     </feature>
     <feature name="Camera">
@@ -10,22 +13,19 @@
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
-    <feature name="NativePageTransitions">
-        <param name="android-package" value="com.telerik.plugins.nativepagetransitions.NativePageTransitions" />
-        <param name="onload" value="true" />
-    </feature>
     <feature name="Geolocation">
         <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
     </feature>
-    <feature name="Checkout">
-        <param name="android-package" value="com.razorpay.cordova.Main" />
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
     </feature>
-    <name>Barber</name>
+    <name>Fablysh</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Fablysh is a platform from where customer can choose saloon and book an appointment.
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+        Fablysh Team
     </author>
     <content src="index.html" />
     <access origin="*" />

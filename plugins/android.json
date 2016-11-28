@@ -7,28 +7,28 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.barber"
-        },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.barber"
-        },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.barber"
+        "com.razorpay.cordova": {
+            "PACKAGE_NAME": "com.fablysh.customer"
         },
         "com.telerik.plugins.nativepagetransitions": {
-            "PACKAGE_NAME": "com.barber"
+            "PACKAGE_NAME": "com.fablysh.customer"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.fablysh.customer"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.fablysh.customer"
         },
         "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.barber"
+            "PACKAGE_NAME": "com.fablysh.customer"
         },
-        "com.razorpay.cordova": {
-            "PACKAGE_NAME": "com.barber"
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.fablysh.customer"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.barber"
+            "PACKAGE_NAME": "com.fablysh.customer"
         }
     }
 }

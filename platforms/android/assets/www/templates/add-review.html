@@ -1,11 +1,11 @@
 <ion-view title="Dashboard" cache-view="false">
     <ion-header-bar class="bar-positive">
-        <button class="button icon ion-chevron-left no-border" ng-click="myGoBack()"></button>
-        <h1 class="title">ABC Saloon</h1>
+        <!--button class="button icon ion-chevron-left no-border" ng-click="myGoBack()"></button-->
+        <h1 class="title">{{merchantName}}</h1>
         <!--button class="button icon ion-camera no-border" ng-click="showCamera()"></button-->
     </ion-header-bar>
     <ion-content overflow-scroll="true" class="padding">
-        <form name="addForm" id="addForm" ng-submit="submitForm(addForm)" class="list card no-margin" novalidate="" >
+        <form name="addForm" id="addForm" ng-submit="addReview(addForm)" class="list card no-margin" novalidate="" >
             <ion-list>
                 <ion-item class="item">
                     <input value="1" type="button" class="button button-small" ng-click="clickedReview(1, $event)">

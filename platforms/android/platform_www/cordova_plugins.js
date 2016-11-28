@@ -1,6 +1,22 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "id": "com.razorpay.cordova.RazorpayCheckout",
+        "file": "plugins/com.razorpay.cordova/www/RazorpayCheckout.js",
+        "pluginId": "com.razorpay.cordova",
+        "clobbers": [
+            "RazorpayCheckout"
+        ]
+    },
+    {
+        "id": "com.telerik.plugins.nativepagetransitions.NativePageTransitions",
+        "file": "plugins/com.telerik.plugins.nativepagetransitions/www/NativePageTransitions.js",
+        "pluginId": "com.telerik.plugins.nativepagetransitions",
+        "clobbers": [
+            "window.plugins.nativepagetransitions"
+        ]
+    },
+    {
         "id": "cordova-plugin-camera.Camera",
         "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
         "pluginId": "cordova-plugin-camera",
@@ -41,14 +57,6 @@ module.exports = [
         ]
     },
     {
-        "id": "com.telerik.plugins.nativepagetransitions.NativePageTransitions",
-        "file": "plugins/com.telerik.plugins.nativepagetransitions/www/NativePageTransitions.js",
-        "pluginId": "com.telerik.plugins.nativepagetransitions",
-        "clobbers": [
-            "window.plugins.nativepagetransitions"
-        ]
-    },
-    {
         "id": "cordova-plugin-geolocation.geolocation",
         "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
         "pluginId": "cordova-plugin-geolocation",
@@ -61,26 +69,18 @@ module.exports = [
         "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
         "pluginId": "cordova-plugin-geolocation",
         "runs": true
-    },
-    {
-        "id": "com.razorpay.cordova.RazorpayCheckout",
-        "file": "plugins/com.razorpay.cordova/www/RazorpayCheckout.js",
-        "pluginId": "com.razorpay.cordova",
-        "clobbers": [
-            "RazorpayCheckout"
-        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "cordova-plugin-whitelist": "1.3.0",
+    "com.razorpay.cordova": "0.13.1",
+    "com.telerik.plugins.nativepagetransitions": "0.6.5",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-camera": "2.3.0",
     "cordova-plugin-device": "1.1.3",
-    "com.telerik.plugins.nativepagetransitions": "0.6.5",
     "cordova-plugin-geolocation": "2.4.0",
-    "com.razorpay.cordova": "0.13.1"
+    "cordova-plugin-whitelist": "1.3.0"
 };
 // BOTTOM OF METADATA
 });
