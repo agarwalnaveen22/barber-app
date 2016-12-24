@@ -2589,6 +2589,132 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                 return result;
             };
 
+            $scope.makeShare = function (id) {
+                showLoader($ionicLoading);
+                var responsePromise = $http({
+                    method: 'POST',
+                    url: apiUrl + "getReviewDetail",
+                    data: $.param({user_id: userInfo.id, id: id}),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
+
+                responsePromise.success(function (data, status, headers, config) {
+                    hideLoader($ionicLoading);
+                    if (data.status) {
+                        var images = [];
+                        for (var img in data.data.UserImage) {
+                            images.push(img.image);
+                        }
+                        var options = {
+                            message: data.data.Review.review, // not supported on some apps (Facebook, Instagram)
+                            subject: data.data.Merchant.name, // fi. for email
+                            files: images, // an array of filenames either locally or remotely
+                            url: 'http://www.fablysh.com',
+                            chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+                        }
+                        window.plugins.socialsharing.shareWithOptions(options, function (result) {
+                            showLoader($ionicLoading);
+                            var responsePromise = $http({
+                                method: 'POST',
+                                url: apiUrl + "makeReviewShare",
+                                data: $.param({user_id: userInfo.id, review_id: id}),
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                }
+                            });
+
+                            responsePromise.success(function (data, status, headers, config) {
+                                hideLoader($ionicLoading);
+                                if (data.status) {
+                                    $("#reviewShare").text(data.data);
+                                } else {
+                                    var myPopup = $ionicPopup.show({
+                                        title: 'Error',
+                                        scope: $scope,
+                                        template: data.message,
+                                        buttons: [
+                                            {
+                                                text: 'Cancel'
+                                            },
+                                            {
+                                                text: '<b>OK</b>',
+                                                type: 'button-assertive'
+                                            }
+                                        ]
+                                    });
+                                }
+                            });
+                            responsePromise.error(function (data, status, headers, config) {
+                                hideLoader($ionicLoading);
+                                var myPopup = $ionicPopup.show({
+                                    title: 'Error',
+                                    scope: $scope,
+                                    template: "Invalid Request",
+                                    buttons: [
+                                        {
+                                            text: 'Cancel'
+                                        },
+                                        {
+                                            text: '<b>OK</b>',
+                                            type: 'button-assertive'
+                                        }
+                                    ]
+                                });
+                            });
+                        }, function (msg) {
+                            var myPopup = $ionicPopup.show({
+                                title: 'Error',
+                                scope: $scope,
+                                template: "Sharing failed with message: " + msg,
+                                buttons: [
+                                    {
+                                        text: 'Cancel'
+                                    },
+                                    {
+                                        text: '<b>OK</b>',
+                                        type: 'button-assertive'
+                                    }
+                                ]
+                            });
+                        });
+                    } else {
+                        var myPopup = $ionicPopup.show({
+                            title: 'Error',
+                            scope: $scope,
+                            template: data.message,
+                            buttons: [
+                                {
+                                    text: 'Cancel'
+                                },
+                                {
+                                    text: '<b>OK</b>',
+                                    type: 'button-assertive'
+                                }
+                            ]
+                        });
+                    }
+                });
+                responsePromise.error(function (data, status, headers, config) {
+                    hideLoader($ionicLoading);
+                    var myPopup = $ionicPopup.show({
+                        title: 'Error',
+                        scope: $scope,
+                        template: "Invalid Request",
+                        buttons: [
+                            {
+                                text: 'Cancel'
+                            },
+                            {
+                                text: '<b>OK</b>',
+                                type: 'button-assertive'
+                            }
+                        ]
+                    });
+                });
+            }
+
             $scope.makeLike = function (id) {
                 showLoader($ionicLoading);
                 var responsePromise = $http({
@@ -2695,7 +2821,7 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
 
         })
 
-        .controller('CommentsController', function ($scope, $state, $ionicLoading, $http, $ionicPopup ,$stateParams) {
+        .controller('CommentsController', function ($scope, $state, $ionicLoading, $http, $ionicPopup, $stateParams) {
             showLoader($ionicLoading);
             var responsePromise = $http({
                 method: 'POST',

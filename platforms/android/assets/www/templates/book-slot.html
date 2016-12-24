@@ -4,7 +4,7 @@
         <h1 class="title">Book Slot</h1>
     </ion-header-bar>
     <ion-content overflow-scroll="true" class="padding">
-        <form name="addForm" ng-submit="submitForm(addForm)" class="list card no-margin" novalidate="" >
+        <form name="addForm" id="boobkForm" ng-submit="submitForm(addForm)" class="list card no-margin" novalidate="" >
             <ion-input class="item item-input item-stacked-label" 
                        ng-class="{ 'has-errors' : addForm.date.$invalid && addForm.$submitted, 
         'no-errors' : addForm.date.$valid && addForm.$submitted}">
