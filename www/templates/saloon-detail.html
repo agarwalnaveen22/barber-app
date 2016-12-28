@@ -35,7 +35,7 @@
                     <i class="icon ion-location size-25"></i> &nbsp;&nbsp;{{saloon.Merchant.location}}
                 </div>
                 <div class="row margin-top-5">
-                    <button class="button col col-50 ion-android-call"> &nbsp;&nbsp;Call</button>
+                    <button class="button col col-50 ion-android-call" ng-click="call(saloon.Merchant.contact)"> &nbsp;&nbsp;Call</button>
                     <button class="button col col-50 ion-lock-combination" ng-click="goToPage('book-slot',saloon.Merchant.id)"> &nbsp;&nbsp;Book Slot</button>
                 </div>
             </ion-item>

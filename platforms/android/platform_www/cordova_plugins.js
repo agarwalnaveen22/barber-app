@@ -77,6 +77,38 @@ module.exports = [
         "clobbers": [
             "window.plugins.socialsharing"
         ]
+    },
+    {
+        "id": "com.teamnemitoff.phonedialer.phonedialer",
+        "file": "plugins/com.teamnemitoff.phonedialer/www/dialer.js",
+        "pluginId": "com.teamnemitoff.phonedialer",
+        "merges": [
+            "phonedialer"
+        ]
+    },
+    {
+        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
+        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
+        "pluginId": "com.phonegap.plugins.PushPlugin",
+        "clobbers": [
+            "PushNotification"
+        ]
+    },
+    {
+        "id": "cordova-plugin-dialogs.notification",
+        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+        "pluginId": "cordova-plugin-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "id": "cordova-plugin-dialogs.notification_android",
+        "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
+        "pluginId": "cordova-plugin-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -89,7 +121,10 @@ module.exports.metadata =
     "cordova-plugin-device": "1.1.3",
     "cordova-plugin-geolocation": "2.4.0",
     "cordova-plugin-whitelist": "1.3.0",
-    "cordova-plugin-x-socialsharing": "5.1.3"
+    "cordova-plugin-x-socialsharing": "5.1.3",
+    "com.teamnemitoff.phonedialer": "0.3.0",
+    "com.phonegap.plugins.PushPlugin": "2.5.0",
+    "cordova-plugin-dialogs": "1.3.1"
 };
 // BOTTOM OF METADATA
 });

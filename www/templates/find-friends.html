@@ -7,58 +7,32 @@
         <ion-list>
             <ion-item>
                 <label class="item-input textbox-search">
-                    <input type="search" placeholder="Search">
+                    <input type="search" ng-change="findSearch()" id="search" ng-model="search" placeholder="Search">
                     <i class="icon ion-search size-25"></i>
                 </label>
             </ion-item>
-            <ion-item>
+            <!--ion-item>
                 <label class="item-input textbox-search">
                     <input type="text" placeholder="Find Friends">
                     <i class="icon ion-social-facebook size-25"></i>
                 </label>
-            </ion-item>
+            </ion-item-->
         </ion-list>
         <ion-list>
             <div class="list-title">Suggestions in your city</div>
-            <ion-item class="item-thumbnail-left">
-                <img src="img/profile.jpg" />
+            <ion-item class="item-thumbnail-left" ng-if="users.length>0" ng-repeat="user in users">
+                <img ng-if="user.UserDetail.profile_picture==''" src="img/profile.jpg" />
+                <img ng-if="user.UserDetail.profile_picture!=''" src="{{user.UserDetail.profile_picture}}" />
                 <div class="row">
-                    <div class="col-50 left-align">ABC Saloon</div>
+                    <div class="col-50 left-align">{{user.UserDetail.name}}</div>
                     <div class="col-50 right-align size-10">Follow</div>
                 </div>
                 <div class="row">
-                    <div class="size-10">B-15, Viashali Nagar, Jaipur</div>
+                    <div class="size-10">{{user.UserDetail.current_reviews}} Reviews, Followers {{user.UserDetail.current_followers}}</div>
                 </div>
             </ion-item>
-            <ion-item class="item-thumbnail-left">
-                <img src="img/profile.jpg" />
-                <div class="row">
-                    <div class="col-50 left-align">ABC Saloon</div>
-                    <div class="col-50 right-align size-10">Follow</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">B-15, Viashali Nagar, Jaipur</div>
-                </div>
-            </ion-item>
-            <ion-item class="item-thumbnail-left">
-                <img src="img/profile.jpg" />
-                <div class="row">
-                    <div class="col-50 left-align">ABC Saloon</div>
-                    <div class="col-50 right-align size-10">Follow</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">B-15, Viashali Nagar, Jaipur</div>
-                </div>
-            </ion-item>
-            <ion-item class="item-thumbnail-left">
-                <img src="img/profile.jpg" />
-                <div class="row">
-                    <div class="col-50 left-align">ABC Saloon</div>
-                    <div class="col-50 right-align size-10">Follow</div>
-                </div>
-                <div class="row">
-                    <div class="size-10">B-15, Viashali Nagar, Jaipur</div>
-                </div>
+            <ion-item ng-if="users.length<=0">
+                No any friend suggestions
             </ion-item>
         </ion-list>
         

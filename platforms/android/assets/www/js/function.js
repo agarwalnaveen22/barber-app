@@ -47,6 +47,35 @@ function alertDismissed() {
 
 }
 
+function onNotification(e) {
+
+    switch (e.event)
+    {
+        case 'registered':
+            var responsePromise = $.ajax({
+                method: 'POST',
+                url: apiUrl + "registerDevice",
+                data: $.param({
+                    user_id: userInfo.id,
+                    uuid: device.uuid,
+                    registrationid: e.regid,
+                    model: device.model,
+                    platform: device.platform
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            break;
+        case 'message':
+            showAlert(e.payload.message, alertDismissed, e.payload.title, "OK");
+            break;
+        case 'error':
+            alert(e.msg);
+            break;
+    }
+}
+
 function getNotifications() {
     $.ajax({
         method: 'POST',

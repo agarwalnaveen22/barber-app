@@ -1,4 +1,4 @@
-var apiUrl = 'http://fablysh.esy.es/api/';
+var apiUrl = 'http://localhost/barber-web/api/';
 var userInfo = {};
 var db = '';
 angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
@@ -7,7 +7,7 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
 
             $ionicConfigProvider.views.maxCache(0);
             $ionicConfigProvider.scrolling.jsScrolling(false);
-            $ionicConfigProvider.tabs.position('bottom');
+            $ionicConfigProvider.tabs.position('top');
             //$ionicConfigProvider.views.transition('none');
             $stateProvider.state('home', {
                 url: '/',
@@ -116,7 +116,8 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                 url: '/mycommunity',
                 views: {
                     'feeds-mycommunity': {
-                        templateUrl: 'templates/my-community.html'
+                        templateUrl: 'templates/my-community.html',
+                        controller: 'MyCommunityController'
                     }
                 }
             })
@@ -281,12 +282,20 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
         .controller('AppCtrl', function ($state, $scope, $http, $ionicLoading, $ionicModal, $ionicHistory, $ionicSideMenuDelegate, $ionicPopup) {
             db = window.openDatabase("Fablysh", "1.0", "Fablysh", 2 * 1024 * 1024);
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS BOOKINGS (id, bookingid)', [], function (tx, results) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS BOOKINGS (id INTEGER PRIMARY KEY AUTOINCREMENT, bookingid INT NOT NULL)', [], function (tx, results) {
                     // not required
                 }, function (err) {
                     console.log("can not create table");
                 });
             });
+
+            $scope.Range = function (end) {
+                var result = [];
+                for (var i = 1; i <= end; i++) {
+                    result.push(i);
+                }
+                return result;
+            };
 
             var bookingIds = [];
             db.transaction(function (tx) {
@@ -297,6 +306,7 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                             bookingIds.push(results.rows.item(i).bookingid);
                         }
                         var paymentInterval = setInterval(function () {
+                            alert(userInfo.id+" : "+bookingIds);
                             var responsePromise = $http({
                                 method: 'POST',
                                 url: apiUrl + "getCustomerStartedBooking",
@@ -795,6 +805,29 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                         if (data.status) {
                             userInfo = data.data.User;
                             userInfo.userDetail = data.data.UserDetail[0];
+                            if (device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos") {
+                                pushNotification.register(
+                                        function () {
+                                            console.log("success");
+                                        },
+                                        function () {
+                                            console.log("error");
+                                        },
+                                        {
+                                            "senderID": "89616263869",
+                                            "ecb": "onNotification"
+                                        });
+                            } else {
+                                pushNotification.register(
+                                        tokenHandler,
+                                        errorHandler,
+                                        {
+                                            "badge": "true",
+                                            "sound": "true",
+                                            "alert": "true",
+                                            "ecb": "onNotificationAPN"
+                                        });
+                            }
                             $scope.goToPage('dashboard');
                         } else {
                             var myPopup = $ionicPopup.show({
@@ -1192,6 +1225,7 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
             $scope.getCurrentLocation = function () {
                 showLoader($ionicLoading);
                 if (navigator.geolocation) {
+                    var posOptions = {timeout: 10000, enableHighAccuracy: true};
                     navigator.geolocation.getCurrentPosition(function (position) {
                         $("#lat").val(position.coords.latitude);
                         $("#lng").val(position.coords.longitude);
@@ -1252,7 +1286,7 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                                 }
                             ]
                         });
-                    });
+                    }, posOptions);
                 } else {
                     hideLoader($ionicLoading);
                     var myPopup = $ionicPopup.show({
@@ -1273,11 +1307,14 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
             }
 
             var posOptions = {timeout: 10000, enableHighAccuracy: true};
+            showLoader($ionicLoading);
             navigator.geolocation.getCurrentPosition(function (position) {
+                hideLoader($ionicLoading);
                 lat = position.coords.latitude;
                 long = position.coords.longitude;
                 $scope.searchNearBy(lat, long);
             }, function () {
+                hideLoader($ionicLoading);
                 var myPopup = $ionicPopup.show({
                     title: 'Error',
                     scope: $scope,
@@ -1295,7 +1332,7 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                         }
                     ]
                 });
-            });
+            }, posOptions);
 
             var cronNotification = setInterval(function () {
                 getNotifications();
@@ -1400,6 +1437,11 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                 hideLoader($ionicLoading);
                 if (data.status) {
                     $scope.userDetail = data.data;
+                    if (data.data.UserDetail.profile_picture == '') {
+                        $("#image").attr("src", "img/profile.jpg");
+                    } else {
+                        $("#image").attr("src", data.data.UserDetail.profile_picture);
+                    }
                     $scope.$apply();
                 } else {
                     var myPopup = $ionicPopup.show({
@@ -1468,7 +1510,12 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                     $scope.data.summary = data.data.UserDetail.summary;
                     $("#lat").val(data.data.UserDetail.lat);
                     $("#lng").val(data.data.UserDetail.lng);
-                    $("#image").attr("src", data.data.UserDetail.profile_picture);
+                    if (data.data.UserDetail.profile_picture == '') {
+                        $("#image").attr("src", "img/profile.jpg");
+                    } else {
+                        $("#image").attr("src", data.data.UserDetail.profile_picture);
+                    }
+
                     //$("#title").text(data.data.UserDetail.name);
                 } else {
                     var myPopup = $ionicPopup.show({
@@ -1591,7 +1638,7 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
             $scope.submitForm = function (addForm) {
                 if (addForm.$valid) {
                     var image = '';
-                    if ($("#image").attr("src") != 'img/file-add.png') {
+                    if ($("#image").attr("src") != 'img/profile.jpg') {
                         image = $("#image").attr("src");
                     }
                     showLoader($ionicLoading);
@@ -2069,8 +2116,30 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
             });
         })
 
-        .controller('FindFriendsController', function ($scope, $state) {
+        .controller('FindFriendsController', function ($scope, $state, $http) {
+            $scope.findSearch = function () {
+                console.log($("#search").val())
+                if ($("#search").val() != '') {
+                    var responsePromise = $http({
+                        method: 'POST',
+                        url: apiUrl + "findFriends",
+                        data: $.param({user_id: userInfo.id, name: $("#search").val()}),
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
 
+                    responsePromise.success(function (data, status, headers, config) {
+                        if (data.status) {
+                            $scope.users = data.data;
+                            $scope.$apply();
+                        } else {
+                            $scope.users = [];
+                            $scope.$apply();
+                        }
+                    });
+                }
+            }
         })
 
         .controller('ChangePasswordController', function ($scope, $state, $ionicPopup, $ionicLoading, $http) {
@@ -2336,6 +2405,21 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                 });
             });
 
+            $scope.call = function (contact) {
+                phonedialer.dial(
+                        contact,
+                        function (err) {
+                            if (err == "empty")
+                                alert("Unknown phone number");
+                            else
+                                alert("Dialer Error:" + err);
+                        },
+                        function (success) {
+                            //alert('Dialing succeeded');
+                        }
+                );
+            }
+
 
         })
 
@@ -2527,11 +2611,11 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                                         onTap: function () {
                                             bookingId = data.data;
                                             db.transaction(function (tx) {
-                                                tx.executeSql('INSERT INTO BOOKING (bookingid) VALUES("' + data.data + '")', [], function (tx, results) {
+                                                tx.executeSql('INSERT INTO BOOKINGS (bookingid) VALUES(' + parseInt(data.data) + ')', [], function (tx, results) {
                                                     $scope.goToPage('dashboard');
                                                     $scope.$apply();
                                                 }, function (err) {
-                                                    console.log("error in insertion");
+                                                    alert("error in insertion "+JSON.stringify(err));
                                                 });
                                             });
                                         }
@@ -2576,18 +2660,57 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
             }
         })
 
-        .controller('FeedsController', function ($scope, $state) {
+        .controller('FeedsController', function ($scope, $state, $ionicLoading, $ionicPopup, $http) {
+            $scope.makeLike = function (id) {
+                showLoader($ionicLoading);
+                var responsePromise = $http({
+                    method: 'POST',
+                    url: apiUrl + "makeReviewLike",
+                    data: $.param({user_id: userInfo.id, review_id: id}),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
 
-        })
-
-        .controller('MyFeedsController', function ($scope, $state, $ionicLoading, $ionicPopup, $http, $ionicModal) {
-            $scope.Range = function (end) {
-                var result = [];
-                for (var i = 1; i <= end; i++) {
-                    result.push(i);
-                }
-                return result;
-            };
+                responsePromise.success(function (data, status, headers, config) {
+                    hideLoader($ionicLoading);
+                    if (data.status) {
+                        $("#reviewLike").text(data.data);
+                    } else {
+                        var myPopup = $ionicPopup.show({
+                            title: 'Error',
+                            scope: $scope,
+                            template: data.message,
+                            buttons: [
+                                {
+                                    text: 'Cancel'
+                                },
+                                {
+                                    text: '<b>OK</b>',
+                                    type: 'button-assertive'
+                                }
+                            ]
+                        });
+                    }
+                });
+                responsePromise.error(function (data, status, headers, config) {
+                    hideLoader($ionicLoading);
+                    var myPopup = $ionicPopup.show({
+                        title: 'Error',
+                        scope: $scope,
+                        template: "Invalid Request",
+                        buttons: [
+                            {
+                                text: 'Cancel'
+                            },
+                            {
+                                text: '<b>OK</b>',
+                                type: 'button-assertive'
+                            }
+                        ]
+                    });
+                });
+            }
 
             $scope.makeShare = function (id) {
                 showLoader($ionicLoading);
@@ -2605,17 +2728,15 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                     if (data.status) {
                         var images = [];
                         $.each(data.data.UserImage, function (index, value) {
-                        	images.push(value.image);
+                            images.push(value.image);
                         });
-                        
                         var options = {
                             message: data.data.Review.review, // not supported on some apps (Facebook, Instagram)
                             subject: data.data.Merchant.name, // fi. for email
                             files: images, // an array of filenames either locally or remotely
-                            url: 'http://www.fablysh.com',
+                            //url: 'http://www.fablysh.com',
                             chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
                         }
-                        //alert(JSON.stringify(options))
                         window.plugins.socialsharing.shareWithOptions(options, function (result) {
                             showLoader($ionicLoading);
                             var responsePromise = $http({
@@ -2716,57 +2837,9 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                     });
                 });
             }
+        })
 
-            $scope.makeLike = function (id) {
-                showLoader($ionicLoading);
-                var responsePromise = $http({
-                    method: 'POST',
-                    url: apiUrl + "makeReviewLike",
-                    data: $.param({user_id: userInfo.id, review_id: id}),
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                });
-
-                responsePromise.success(function (data, status, headers, config) {
-                    hideLoader($ionicLoading);
-                    if (data.status) {
-                        $("#reviewLike").text(data.data);
-                    } else {
-                        var myPopup = $ionicPopup.show({
-                            title: 'Error',
-                            scope: $scope,
-                            template: data.message,
-                            buttons: [
-                                {
-                                    text: 'Cancel'
-                                },
-                                {
-                                    text: '<b>OK</b>',
-                                    type: 'button-assertive'
-                                }
-                            ]
-                        });
-                    }
-                });
-                responsePromise.error(function (data, status, headers, config) {
-                    hideLoader($ionicLoading);
-                    var myPopup = $ionicPopup.show({
-                        title: 'Error',
-                        scope: $scope,
-                        template: "Invalid Request",
-                        buttons: [
-                            {
-                                text: 'Cancel'
-                            },
-                            {
-                                text: '<b>OK</b>',
-                                type: 'button-assertive'
-                            }
-                        ]
-                    });
-                });
-            }
+        .controller('MyFeedsController', function ($scope, $state, $ionicLoading, $ionicPopup, $http, $ionicModal) {
 
             showLoader($ionicLoading);
             var responsePromise = $http({
@@ -2819,8 +2892,56 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
             });
         })
 
-        .controller('MyCommunityController', function ($scope, $state) {
+        .controller('MyCommunityController', function ($scope, $state, $ionicLoading, $ionicPopup, $http) {
+            showLoader($ionicLoading);
+            var responsePromise = $http({
+                method: 'POST',
+                url: apiUrl + "getAllCommunityReviews",
+                data: $.param({user_id: userInfo.id}),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
+            responsePromise.success(function (data, status, headers, config) {
+                hideLoader($ionicLoading);
+                if (data.status) {
+                    $scope.reviews = data.data;
+                    $scope.Math = Math;
+                } else {
+                    var myPopup = $ionicPopup.show({
+                        title: 'Error',
+                        scope: $scope,
+                        template: data.message,
+                        buttons: [
+                            {
+                                text: 'Cancel'
+                            },
+                            {
+                                text: '<b>OK</b>',
+                                type: 'button-assertive'
+                            }
+                        ]
+                    });
+                }
+            });
+            responsePromise.error(function (data, status, headers, config) {
+                hideLoader($ionicLoading);
+                var myPopup = $ionicPopup.show({
+                    title: 'Error',
+                    scope: $scope,
+                    template: "Invalid Request",
+                    buttons: [
+                        {
+                            text: 'Cancel'
+                        },
+                        {
+                            text: '<b>OK</b>',
+                            type: 'button-assertive'
+                        }
+                    ]
+                });
+            });
         })
 
         .controller('CommentsController', function ($scope, $state, $ionicLoading, $http, $ionicPopup, $stateParams) {
@@ -2872,6 +2993,59 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                     ]
                 });
             });
+
+            $scope.submitForm = function (commentForm) {
+                if (commentForm.$valid) {
+                    showLoader($ionicLoading);
+                    var responsePromise = $http({
+                        method: 'POST',
+                        url: apiUrl + "makeReviewComment",
+                        data: $("#commentForm").serialize() + "&" + $.param({user_id: userInfo.id, review_id: $stateParams.id}),
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
+
+                    responsePromise.success(function (data, status, headers, config) {
+                        hideLoader($ionicLoading);
+                        if (data.status) {
+                            $scope.goToPage("feeds.myfeeds");
+                        } else {
+                            var myPopup = $ionicPopup.show({
+                                title: 'Error',
+                                scope: $scope,
+                                template: data.message,
+                                buttons: [
+                                    {
+                                        text: 'Cancel'
+                                    },
+                                    {
+                                        text: '<b>OK</b>',
+                                        type: 'button-assertive'
+                                    }
+                                ]
+                            });
+                        }
+                    });
+                    responsePromise.error(function (data, status, headers, config) {
+                        hideLoader($ionicLoading);
+                        var myPopup = $ionicPopup.show({
+                            title: 'Error',
+                            scope: $scope,
+                            template: "Invalid Request",
+                            buttons: [
+                                {
+                                    text: 'Cancel'
+                                },
+                                {
+                                    text: '<b>OK</b>',
+                                    type: 'button-assertive'
+                                }
+                            ]
+                        });
+                    });
+                }
+            }
         })
 
         .controller('FollowersController', function ($scope, $state) {

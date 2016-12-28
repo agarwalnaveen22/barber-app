@@ -8,9 +8,9 @@
             <ion-list>
                 <ion-item class="item">
                     <div class="item-avatar">
-                        <img src="img/profile.jpg" class="avtar-custom" />
+                        <img id="image" src="img/profile.jpg" class="avtar-custom" />
                     </div>
-                    <button class="button icon ion-edit top-corner" ng-click="showCamera()"></button>
+                    <button type="button" class="button icon ion-edit top-corner" ng-click="showCamera('image')"></button>
                 </ion-item>
             </ion-list>
             <ion-input class="item item-input item-stacked-label" 

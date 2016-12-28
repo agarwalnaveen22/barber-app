@@ -7,8 +7,8 @@
     <ion-content overflow-scroll="true" class="padding">
         <div class="list margin-top-5" ng-repeat="comment in comments">
             <ion-item class="item-thumbnail-left">
-                <img ng-if="comment.User.UserDetail.profile_picture==''" src="img/profile.jpg" />
-                <img ng-if="comment.User.UserDetail.profile_picture!=''" src="{{comment.User.UserDetail.profile_picture}}" />
+                <img ng-if="comment.User.UserDetail.profile_picture == ''" src="img/profile.jpg" />
+                <img ng-if="comment.User.UserDetail.profile_picture != ''" src="{{comment.User.UserDetail.profile_picture}}" />
                 <div class="row">
                     <div class="col-50 left-align">{{comment.User.UserDetail.name}}</div>
                 </div>
@@ -21,5 +21,25 @@
             </ion-item>
         </div>
     </ion-content>
+    <div class="bar bar-footer">
+        <form name="commentForm" id="commentForm" ng-submit="submitForm(commentForm)" class="list card no-margin commentForm" novalidate="" >
+            <ion-input class="item item-input item-stacked-label" 
+                       ng-class="{ 'has-errors' : commentForm.comment.$invalid && commentForm.$submitted, 
+        'no-errors' : commentForm.comment.$valid && commentForm.$submitted}">
+                <textarea name="comment" placeholder="Enter your comment" ng-model="data.comment" required></textarea>
+            </ion-input>
 
+            <div class="error-container" ng-show="commentForm.comment.$error && commentForm.$submitted" 
+                 ng-messages="commentForm.comment.$error">
+                <div class="error" ng-message="required">
+                    <i class="ion-information-circled"></i> 
+                    Please enter comment
+                </div>
+            </div>
+            <ion-input class="item-input padding btn-send">
+                <input type="submit" class="button button-positive" value="Save" 
+                       ng-disabled="commentForm.$invalid && commentForm.$submitted">
+            </ion-input>
+        </form>
+    </div>
 </ion-view>

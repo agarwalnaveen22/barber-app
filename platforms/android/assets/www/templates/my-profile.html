@@ -8,8 +8,7 @@
         <ion-list>
             <ion-item class="item">
                 <div class="item-avatar">
-                    <img ng-if="userDetail.UserDetail.profile_picture==''" src="img/profile.jpg" class="avtar-custom" />
-                    <img ng-if="userDetail.UserDetail.profile_picture!=''" src="userDetail.profile_picture" class="avtar-custom" />
+                    <img id="image" src="img/profile.jpg" class="avtar-custom" />
                 </div>
                 <div class="top-corner">{{userDetail.UserDetail.gender}}</div>
                 <div class="center-align">{{userDetail.UserDetail.name}}</div>
