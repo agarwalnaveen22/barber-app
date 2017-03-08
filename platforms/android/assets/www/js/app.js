@@ -1,4 +1,5 @@
-var apiUrl = 'http://localhost/barber-web/api/';
+//var apiUrl = 'http://localhost/barber-web/api/';
+var apiUrl = 'http://139.162.22.238/html/saloon/api/';
 var userInfo = {};
 var db = '';
 angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
@@ -306,7 +307,6 @@ angular.module('barber', ['ionic', 'ui.router', 'ngMessages'])
                             bookingIds.push(results.rows.item(i).bookingid);
                         }
                         var paymentInterval = setInterval(function () {
-                            alert(userInfo.id+" : "+bookingIds);
                             var responsePromise = $http({
                                 method: 'POST',
                                 url: apiUrl + "getCustomerStartedBooking",
